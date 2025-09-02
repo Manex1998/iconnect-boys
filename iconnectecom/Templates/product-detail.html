@@ -3,272 +3,427 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iPhone 16 Pro Max - Product Detail</title>
+    <title>iPhone 12 64GB Blue</title>
+    
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
             background-color: #f8f9fa;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
-        .container {
-            background-color: #fff;
-            padding: 2rem;
-            margin-top: 2rem;
+        .product-main-img {
+            position: relative;
+            overflow: hidden;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .product-title {
-            font-size: 1.75rem;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 1rem;
+        .product-main-img img {
+            width: 100%;
+            transition: transform 0.3s ease;
         }
-        .price {
-            font-size: 1.5rem;
-            color: #B12704;
-            font-weight: 700;
-        }
-        .saving {
-            color: #CC0C39;
-            font-weight: 600;
-            margin-left: 0.5rem;
-            font-size: 1rem;
-        }
-        .list-price {
-            text-decoration: line-through;
-            color: #6c757d;
-            margin-left: 0.5rem;
-            font-size: 1rem;
-        }
-        .rating i {
-            color: #f0a500;
-            font-size: 1rem;
-        }
-        .feature-bullets h5 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .feature-bullets li {
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        .see-more {
-            color: #0066c0;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 0.9rem;
-            transition: color 0.2s ease-in-out;
-        }
-        .see-more:hover {
-            color: #004080;
-        }
-        .product-img {
-            max-width: 100%;
-            border-radius: 8px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .product-img:hover {
-            transform: scale(1.05); /* Subtle zoom on hover */
-        }
-        .thumbnail {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.2s ease-in-out;
-        }
-        .thumbnail:hover, .thumbnail.active {
-            border-color: #0066c0;
-        }
-        .table th {
-            width: 180px;
-            font-weight: 500;
-            color: #333;
-        }
-        .table td {
-            font-size: 0.9rem;
-        }
-        .action-buttons {
-            position: sticky;
-            top: 2rem;
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .btn-add-cart, .btn-buy-now {
-            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        }
-        .btn-add-cart:hover, .btn-buy-now:hover {
+        .product-main-img img:hover {
             transform: scale(1.05);
         }
-        .quantity-selector {
-            max-width: 120px;
+        .product-thumbs img {
+            width: 80px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            margin: 5px;
+            transition: border-color 0.3s ease;
         }
-        .breadcrumb {
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
+        .product-thumbs img.active {
+            border-color: #007bff;
         }
-        /* Mobile Adjustments */
-        @media (max-width: 576px) {
-            .container {
-                padding: 1rem;
-                margin-top: 1rem;
+        .sticky-buy-box {
+            position: sticky;
+            top: 20px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .product-price {
+            font-size: 28px;
+            color: #e74c3c;
+            font-weight: 700;
+        }
+        .product-old-price {
+            color: #888;
+            text-decoration: line-through;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+        .save-price {
+            color: #27ae60;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .option-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+        .option-btn.active, .option-btn:hover {
+            border-color: #007bff;
+            background: #e6f0ff;
+            color: #007bff;
+        }
+        .btn-buy {
+            background: #007bff;
+            color: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        .btn-buy:hover {
+            background: #0056b3;
+        }
+        .btn-wishlist {
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        .product-rating i {
+            color: #f0ad4e;
+        }
+        .related-products .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .related-products .card:hover {
+            transform: translateY(-5px);
+        }
+        .related-products .card-img-top {
+            border-radius: 12px 12px 0 0;
+        }
+        .tab-content {
+            border: 1px solid #e9ecef;
+            border-radius: 0 0 12px 12px;
+            padding: 20px;
+        }
+        .nav-tabs .nav-link {
+            border-radius: 8px 8px 0 0;
+            color: #333;
+            font-weight: 500;
+        }
+        .nav-tabs .nav-link.active {
+            background: #007bff;
+            color: #fff;
+        }
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .trust-signals img {
+            width: 40px;
+            margin: 0 10px;
+        }
+        .newsletter-section {
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: #fff;
+            border-radius: 12px;
+            padding: 40px;
+        }
+        .footer-links a {
+            color: #007bff;
+            margin: 0 10px;
+        }
+        @media (max-width: 768px) {
+            .product-thumbs img {
+                width: 60px;
             }
-            .product-title {
-                font-size: 1.5rem;
-            }
-            .price {
-                font-size: 1.25rem;
-            }
-            .action-buttons {
+            .sticky-buy-box {
                 position: static;
-                margin-top: 1rem;
-            }
-            .thumbnail {
-                width: 50px;
-                height: 50px;
+                margin-top: 20px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Breadcrumbs -->
+    <div class="container my-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Electronics</a></li>
+                <li class="breadcrumb-item active" aria-current="page">iPhone 12 64GB Blue</li>
+            </ol>
+        </nav>
+    </div>
 
-<div class="container">
-    <!-- Breadcrumb Navigation -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Electronics</a></li>
-            <li class="breadcrumb-item active" aria-current="page">iPhone 16 Pro Max</li>
-        </ol>
-    </nav>
-
-    <div class="row">
-        <!-- Product Image Section -->
-        <div class="col-md-5">
-            <div class="text-center mb-3">
-                <img src="13.jpg" alt="iPhone 16 Pro Max" class="product-img" id="mainImage">
-            </div>
-            <!-- Thumbnail Gallery -->
-            <div class="d-flex justify-content-center gap-2">
-                <img src="13.jpg" alt="iPhone 16 Pro Max" class="thumbnail active" data-src="13.jpg">
-                <img src="12.png" alt="iPhone 16 Pro Max Alt" class="thumbnail" data-src="12.png">
-                <!-- Add more thumbnails as needed -->
-            </div>
-        </div>
-
-        <!-- Product Details -->
-        <div class="col-md-4">
-            <h1 class="product-title">Apple iPhone 16 Pro Max, 256 GB, Unlocked</h1>
-
-            <!-- Rating Section -->
-            <div class="rating mb-2">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-                <span class="text-muted ms-1 small">(487 reviews)</span>
-            </div>
-
-            <!-- Price Section -->
-            <div class="mb-3">
-                <span class="price">R27,999.00</span>
-                <span class="saving">-9%</span>
-                <span class="list-price">R30,899.00</span>
-            </div>
-
-            <!-- Product Overview / Specs -->
-            <h5>Product Specifications</h5>
-            <table class="table table-striped">
-                <tbody>
-                    <tr><th>Brand</th><td>Apple</td></tr>
-                    <tr><th>Operating System</th><td>iOS</td></tr>
-                    <tr><th>RAM Memory</th><td>8 GB</td></tr>
-                    <tr><th>CPU Speed</th><td>4.04 GHz</td></tr>
-                    <tr><th>Storage Capacity</th><td>256 GB</td></tr>
-                    <tr><th>Screen Size</th><td>6.9 Inches</td></tr>
-                    <tr><th>Resolution</th><td>1320 x 2868</td></tr>
-                    <tr><th>Refresh Rate</th><td>120 Hz</td></tr>
-                    <tr><th>Model Name</th><td>iPhone 16 Pro Max</td></tr>
-                    <tr><th>Carrier</th><td>Unlocked for All Carriers</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="col-md-3">
-            <div class="action-buttons">
-                <h6 class="mb-3">Buy Now</h6>
-                <div class="mb-3">
-                    <label for="quantity" class="form-label small">Quantity:</label>
-                    <select class="form-select quantity-selector" id="quantity">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
+    <!-- Main Product Section -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Left: Images -->
+            <div class="col-lg-7">
+                <div class="product-main-img mb-3">
+                    <img id="mainImage" src="13.jpg" alt="iPhone 12 64GB Blue" class="img-fluid">
                 </div>
-                <button class="btn btn-warning btn-add-cart w-100 mb-2">
-                    <i class="bi bi-cart me-2"></i>Add to Cart
-                </button>
-                <button class="btn btn-primary btn-buy-now w-100">
-                    Buy Now
-                </button>
+                <div class="d-flex product-thumbs justify-content-center">
+                    <img src="13.jpg" class="active" onclick="switchImage(this)" alt="iPhone 12 Blue">
+                    <img src="product03.png" onclick="switchImage(this)" alt="iPhone 12 Side View">
+                    <img src="product06.png" onclick="switchImage(this)" alt="iPhone 12 Back View">
+                    <img src="product08.png" onclick="switchImage(this)" alt="iPhone 12 Front View">
+                </div>
+            </div>
+
+            <!-- Right: Sticky Buy Box -->
+            <div class="col-lg-5">
+                <div class="sticky-buy-box">
+                    <h2>iPhone 12 64GB Blue</h2>
+                    <div class="product-rating mb-2">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-alt"></i>
+                        <span>4.4 / 5 (11,200+ reviews)</span>
+                    </div>
+                    <div class="product-price" id="priceDisplay">
+                        R4499.90 <span class="product-old-price">R7719.90</span>
+                        <div class="save-price">Save R3220.00</div>
+                    </div>
+                    <p class="text-success">In Stock</p>
+
+                    <!-- Storage Options -->
+                    <div class="mb-3">
+                        <h5>Storage:</h5>
+                        <span class="option-btn active" data-price="4499.90" data-storage="64GB">64GB</span>
+                        <span class="option-btn" data-price="4999.90" data-storage="128GB">128GB</span>
+                        <span class="option-btn" data-price="5499.90" data-storage="256GB">256GB</span>
+                    </div>
+
+                    <!-- Color Options -->
+                    <div class="mb-3">
+                        <h5>Color:</h5>
+                        <span class="option-btn active" data-color="Blue">Blue</span>
+                    </div>
+
+                    <!-- Condition Options -->
+                    <div class="mb-3">
+                        <h5>Aesthetic Condition:</h5>
+                        <span class="option-btn active" data-price="4499.90" data-condition="Good">Good - R4499.90</span>
+                        <span class="option-btn" data-price="4719.90" data-condition="Very Good">Very Good - R4719.90</span>
+                        <span class="option-btn" data-price="5149.90" data-condition="Like New">Like New - R5149.90</span>
+                        <p class="text-muted small">100% functional, good aesthetic condition. Scratches or traces of use visible at 20 cm.</p>
+                    </div>
+
+                    <!-- Battery Status -->
+                    <div class="mb-3">
+                        <h5>Battery Status:</h5>
+                        <span class="option-btn active" data-battery="Optimal">Optimal</span>
+                        <span class="option-btn" data-battery="New">New</span>
+                        <p class="text-muted small">Max capacity &gt; 80%. 6-month guarantee for defective battery. <a href="#">Battery Warranty Policy</a></p>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="mb-3">
+                        <label for="qty">Quantity:</label>
+                        <div class="input-group w-50">
+                            <button class="btn btn-outline-secondary" type="button" onclick="changeQty(-1)">-</button>
+                            <input type="number" id="qty" class="form-control qty-input" value="1" min="1" aria-label="Quantity">
+                            <button class="btn btn-outline-secondary" type="button" onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <button class="btn btn-buy w-100 mb-2"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                    <button class="btn btn-outline-secondary btn-wishlist w-100"><i class="fa fa-heart"></i> Add to Wishlist</button>
+
+                    <!-- Trust Signals -->
+                    <div class="trust-signals text-center mt-3">
+                        <img src="https://via.placeholder.com/40" alt="Secure Payment">
+                        <img src="https://via.placeholder.com/40" alt="Fast Delivery">
+                        <img src="https://via.placeholder.com/40" alt="Trusted Seller">
+                    </div>
+                    <div class="text-muted small mt-2">
+                        <p><strong>Free Delivery:</strong> 3-5 working days via DHL/Fedex. <a href="#">Shipping Policy</a></p>
+                        <p><strong>24-Month Warranty:</strong> Exchange in case of breakdown. <a href="#">Return Policy</a></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Feature Bullets / About This Item -->
-    <div class="feature-bullets mt-5">
-        <h5>About This Item</h5>
-        <ul>
-            <li>STUNNING TITANIUM DESIGN — Strong, light titanium design with 6.9-inch Super Retina XDR display. Ceramic Shield front, 2× tougher than any smartphone glass.</li>
-            <li>BUILT FOR APPLE INTELLIGENCE — Helps you write, express, and get things done effortlessly with advanced privacy protections.</li>
-            <li>TAKE TOTAL CAMERA CONTROL — Quick access to camera tools like zoom and depth of field.</li>
-            <li>MAGNIFICENT SHOTS — 4K 120 fps Dolby Vision videos, 48MP Fusion camera, and improved Ultra Wide camera for macro and wide-angle photos.</li>
-            <li>PHOTOGRAPHIC STYLES — Greater creative flexibility, reversible at any time.</li>
-            <li>THE POWER OF A18 PRO — Faster Neural Engine, improved CPU/GPU, advanced video/photo features, and AAA gaming.</li>
-            <li>A HUGE LEAP IN BATTERY LIFE — Up to 33 hours video playback, USB-C or MagSafe charging.</li>
-        </ul>
-        <div class="see-more" data-bs-toggle="collapse" data-bs-target="#extraBullets" aria-expanded="false">
-            Show More
-        </div>
-        <div class="collapse mt-2" id="extraBullets">
-            <ul>
-                <li>CUSTOMISE YOUR IPHONE — Tint Home Screen icons, find photos faster, and add animated effects in Messages.</li>
-                <li>VITAL SAFETY FEATURES — Crash Detection alerts authorities in case of serious car crash.</li>
-                <li>LEGAL DISCLAIMERS — Summary of main product features; see product details for more.</li>
+        <!-- Tabs -->
+        <div class="mt-5">
+            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="desc-tab" data-bs-toggle="tab" data-bs-target="#desc" type="button" role="tab">Description</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button" role="tab">Specifications</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab">Reviews (11,200+)</button>
+                </li>
             </ul>
-            <div class="see-more" data-bs-toggle="collapse" data-bs-target="#extraBullets">
-                Show Less
+            <div class="tab-content" id="productTabContent">
+                <div class="tab-pane fade show active" id="desc" role="tabpanel">
+                    <p>The iPhone 12 64GB Blue features a stunning 6.1-inch Super Retina XDR display, A14 Bionic chip, and a dual-camera system with Night mode. Refurbished to high standards, it offers excellent performance at a fraction of the original price.</p>
+                </div>
+                <div class="tab-pane fade" id="specs" role="tabpanel">
+                    <ul>
+                        <li>Display: 6.1-inch Super Retina XDR</li>
+                        <li>Processor: A14 Bionic chip</li>
+                        <li>Storage: 64GB / 128GB / 256GB</li>
+                        <li>Cameras: 12MP Dual Camera System (Wide + Ultra Wide)</li>
+                        <li>Battery: Up to 17 hours video playback</li>
+                        <li>Condition: Refurbished (Good, Very Good, Like New)</li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <div class="mb-3">
+                        <p><strong>Jane D.</strong> (15 Jan 2025) <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i></p>
+                        <p>Amazing phone! Looks brand new and performs perfectly.</p>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Mike S.</strong> (05 Feb 2025) <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star-half-alt text-warning"></i></p>
+                        <p>Great value for a refurbished iPhone. Fast shipping!</p>
+                    </div>
+                    <form>
+                        <h6>Leave a Review</h6>
+                        <textarea class="form-control mb-2" rows="3" placeholder="Write your review..." aria-label="Review text"></textarea>
+                        <button class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-products mt-5">
+            <h3 class="mb-4">Related Products</h3>
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="card">
+                        <img src="related1.jpg" class="card-img-top" alt="iPhone 12 Pro">
+                        <div class="card-body">
+                            <h6 class="card-title">iPhone 12 Pro</h6>
+                            <p class="text-danger">R5499.90 <del>R7999.90</del></p>
+                            <button class="btn btn-outline-primary w-100">View</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card">
+                        <img src="related2.jpg" class="card-img-top" alt="iPhone 11">
+                        <div class="card-body">
+                            <h6 class="card-title">iPhone 11</h6>
+                            <p class="text-danger">R3999.90 <del>R6499.90</del></p>
+                            <button class="btn btn-outline-primary w-100">View</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card">
+                        <img src="related3.jpg" class="card-img-top" alt="Apple Watch Series 6">
+                        <div class="card-body">
+                            <h6 class="card-title">Apple Watch Series 6</h6>
+                            <p class="text-danger">R2999.90 <del>R4999.90</del></p>
+                            <button class="btn btn-outline-primary w-100">View</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card">
+                        <img src="related4.jpg" class="card-img-top" alt="AirPods Pro">
+                        <div class="card-body">
+                            <h6 class="card-title">AirPods Pro</h6>
+                            <p class="text-danger">R2499.90 <del>R3999.90</del></p>
+                            <button class="btn btn-outline-primary w-100">View</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Thumbnail Gallery Functionality
-    document.querySelectorAll('.thumbnail').forEach(thumb => {
-        thumb.addEventListener('click', () => {
-            // Remove active class from all thumbnails
-            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-            // Add active class to clicked thumbnail
-            thumb.classList.add('active');
-            // Update main image
-            document.getElementById('mainImage').src = thumb.dataset.src;
+    <!-- Newsletter -->
+    <div class="newsletter-section container my-5 text-center">
+        <h3>Stay Updated</h3>
+        <p>Subscribe for the latest deals and product launches.</p>
+        <form class="row justify-content-center g-2">
+            <div class="col-md-4">
+                <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email address">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-light w-100">Subscribe</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 bg-light">
+        <div class="container">
+            <div class="footer-links mb-3">
+                <a href="#">Privacy Policy</a> •
+                <a href="#">Terms of Service</a> •
+                <a href="#">Contact Us</a> •
+                <a href="#">FAQ</a>
+            </div>
+            <div class="social-links mb-3">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2025 Your Store Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Image Switcher
+        function switchImage(el) {
+            document.getElementById('mainImage').src = el.src;
+            document.querySelectorAll('.product-thumbs img').forEach(img => img.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Quantity Changer
+        function changeQty(amount) {
+            const qtyInput = document.getElementById('qty');
+            let current = parseInt(qtyInput.value);
+            current += amount;
+            if (current < 1) current = 1;
+            qtyInput.value = current;
+        }
+
+        // Dynamic Price Update
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from siblings
+                this.parentElement.querySelectorAll('.option-btn').forEach(sibling => sibling.classList.remove('active'));
+                this.classList.add('active');
+
+                // Update price based on storage or condition
+                if (this.dataset.price) {
+                    const price = parseFloat(this.dataset.price).toFixed(2);
+                    const oldPrice = (parseFloat(this.dataset.price) + 3220).toFixed(2);
+                    document.getElementById('priceDisplay').innerHTML = `
+                        R${price} <span class="product-old-price">R${oldPrice}</span>
+                        <div class="save-price">Save R3220.00</div>
+                    `;
+                }
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
