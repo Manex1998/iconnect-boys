@@ -66,21 +66,67 @@
             font-weight: 500;
             font-size: 16px;
         }
+       /* Aesthetic Condition Options */
+        .condition-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* spacing between buttons */
+        }
+
         .option-btn {
             padding: 8px 16px;
             border: 1px solid #ccc;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-right: 10px;
-            margin-bottom: 10px;
             background: #fff;
+            flex: 0 0 auto; /* allows resizing */
+            text-align: center;
+            
         }
-        .option-btn.active, .option-btn:hover {
+
+        .option-btn.active, 
+        .option-btn:hover {
             border-color: #007bff;
             background: #e6f0ff;
             color: #007bff;
         }
+
+
+        /* Group wrapper for buttons */
+.battery-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;   /* ensure space before <p> */
+}
+
+/* Make sure the note stays clear */
+.mb-3 p {
+    margin-top: 5px;
+}
+
+
+        /* Color Options */
+        .color-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s;
+        }
+
+        .color-swatch.active {
+            border-color: #007bff;
+            transform: scale(1.1);
+        }
+
+
         .btn-buy {
             background: #007bff;
             color: #fff;
@@ -212,14 +258,19 @@
                     </div>
 
                     <!-- Color Options -->
-                    <div class="mb-3">
+                    <div class="mb-3 color-options">
                         <h5>Color:</h5>
-                        <span class="option-btn active" data-color="Blue">Blue</span>
+                        <span class="color-swatch active" data-color="Blue" style="background-color: blue;"></span>
+                        <span class="color-swatch" data-color="Black" style="background-color: black;"></span>
+                        <span class="color-swatch" data-color="White" style="background-color: white; border: 1px solid #aaa;"></span>
+                        <span class="color-swatch" data-color="Red" style="background-color: red;"></span>
                     </div>
 
+
                     <!-- Condition Options -->
-                    <div class="mb-3">
-                        <h5>Aesthetic Condition:</h5>
+                    <h5>Aesthetic Condition:</h5>
+                   <div class="mb-3 condition-options">
+                    
                         <span class="option-btn active" data-price="4499.90" data-condition="Good">Good - R4499.90</span>
                         <span class="option-btn" data-price="4719.90" data-condition="Very Good">Very Good - R4719.90</span>
                         <span class="option-btn" data-price="5149.90" data-condition="Like New">Like New - R5149.90</span>
@@ -229,9 +280,14 @@
                     <!-- Battery Status -->
                     <div class="mb-3">
                         <h5>Battery Status:</h5>
-                        <span class="option-btn active" data-battery="Optimal">Optimal</span>
-                        <span class="option-btn" data-battery="New">New</span>
-                        <p class="text-muted small">Max capacity &gt; 80%. 6-month guarantee for defective battery. <a href="#">Battery Warranty Policy</a></p>
+                        <div class="battery-options">
+                            <span class="option-btn active" data-battery="Optimal">Optimal</span>
+                            <span class="option-btn" data-battery="New">New</span>
+                        </div>
+                        <p class="text-muted small">
+                            Max capacity &gt; 80%. 6-month guarantee for defective battery. 
+                            <a href="#">Battery Warranty Policy</a>
+                        </p>
                     </div>
 
                     <!-- Quantity -->
@@ -424,6 +480,20 @@
                 }
             });
         });
+
+
+        document.querySelectorAll(".color-swatch").forEach(swatch => {
+            swatch.addEventListener("click", () => {
+                // Remove active class from others
+                document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("active"));
+                swatch.classList.add("active");
+
+                // Change product image
+                const color = swatch.dataset.color.toLowerCase();
+                document.getElementById("productImage").src = `images/iphone-${color}.png`;
+            });
+        });
+
     </script>
 </body>
 </html>
