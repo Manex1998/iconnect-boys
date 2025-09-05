@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Your Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2A59FE;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border-radius: 8px;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .top-alert {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+        
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .cart-header {
+            margin-bottom: 20px;
+        }
+        
+        .login-prompt {
+            background-color: #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .cart-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            background: #f8f9fa;
+            padding: 10px;
+        }
+        
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        
+        .product-details {
+            color: var(--secondary);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .product-condition {
+            display: inline-block;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .price-section {
+            text-align: right;
+        }
+        
+        .current-price {
+            font-size: 20px;
+            color: var(--dark);
+            font-weight: 700;
+            display: block;
+        }
+        
+        .old-price {
+            color: var(--secondary);
+            text-decoration: line-through;
+            font-size: 16px;
+            display: block;
+        }
+        
+        .save-price {
+            color: var(--success);
+            font-weight: 500;
+            font-size: 14px;
+            display: block;
+        }
+        
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            border: 1px solid #ced4da;
+            padding: 5px;
+        }
+        
+        .btn-qty {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .btn-remove {
+            color: var(--danger);
+            border: none;
+            background: none;
+            font-size: 14px;
+        }
+        
+        .btn-remove:hover {
+            color: #c82333;
+        }
+        
+        .guarantee-section, .delivery-section {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .warranty-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .form-check {
+            margin-right: 10px;
+        }
+        
+        .warranty-desc {
+            font-size: 14px;
+            color: var(--secondary);
+        }
+        
+        .delivery-info {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .delivery-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+        }
+        
+        .summary-box {
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .summary-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .summary-total {
+            font-weight: 700;
+            font-size: 18px;
+            border-top: 1px solid #e9ecef;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-guest {
+            background-color: #fff;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            font-weight: 600;
+            padding: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-guest:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .btn-checkout {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+            margin-top: 15px;
+        }
+        
+        .btn-checkout:hover {
+            background-color: #1a4afe;
+        }
+        
+        .promo-code {
+            margin-top: 20px;
+        }
+        
+        .benefits-list {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .benefit-icon {
+            color: var(--success);
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .points-reward {
+            background-color: #e8f4ff;
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .additional-cashback {
+            background-color: #fff8e1;
+            border: 1px dashed #ffd54f;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .limit-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .price-section {
+                text-align: left;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Alert Bar -->
+    <div class="top-alert">
+        <div class="container">
+            <div class="text-center">
+                <span class="d-none d-md-inline">GET R300 OFF YOUR FIRST APP ORDER - ENTER CODE </span>
+                <strong>APP300</strong> AT CHECKOUT
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-4">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home me-1"></i> Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+            </ol>
+        </nav>
+
+        <!-- Cart Header -->
+        <div class="cart-header">
+            <h1 class="h2">Your Cart</h1>
+        </div>
+
+        <!-- Login Prompt -->
+        <div class="login-prompt">
+            <i class="fas fa-info-circle me-2"></i> 
+            Log in to save your cart, view your vouchers and VIP benefits.
+            <a href="#" class="text-decoration-none fw-bold ms-2">Log in</a>
+        </div>
+
+        <!-- Additional Cashback Offer -->
+        <div class="additional-cashback">
+            <i class="fas fa-gift me-2"></i> Additional R500 Cashback on this order!
+        </div>
+
+        <!-- Product Limit Notice -->
+        <div class="limit-notice">
+            <i class="fas fa-exclamation-circle me-2"></i> 
+            The item iPhone 12 mini 128GB Black from this seller has a limit of 1 per customer.
+        </div>
+
+        <div class="row">
+            <!-- Left Column - Cart Items -->
+            <div class="col-lg-8">
+                <!-- Cart Item -->
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-3 col-md-2">
+                            <img src="https://via.placeholder.com/120x120/f8f9fa/cccccc?text=iPhone" alt="iPhone 12 mini" class="img-fluid cart-img">
+                        </div>
+                        <div class="col-9 col-md-5">
+                            <h3 class="product-title">iPhone 12 mini 128GB Black</h3>
+                            <div class="product-details">
+                                <span class="product-condition">Good condition</span>
+                                <div class="mt-2">New battery | Works with all networks</div>
+                                <div>Color: Black | Storage: 128GB</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-5 mt-3 mt-md-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="price-section">
+                                    <span class="current-price">R5169.90</span>
+                                    <span class="old-price">R8079.00</span>
+                                    <span class="save-price">Save R2909.10</span>
+                                </div>
+                                <div class="d-flex align-items-center ms-3">
+                                    <button class="btn btn-outline-secondary btn-qty" onclick="changeQty(-1)">-</button>
+                                    <input type="number" class="form-control qty-input mx-2" value="1" min="1" max="1">
+                                    <button class="btn btn-outline-secondary btn-qty" onclick="changeQty(1)">+</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button class="btn-remove" onclick="removeItem()">
+                                    <i class="fa fa-trash"></i> Remove
+                                </button>
+                                <button class="btn-remove ms-3">
+                                    <i class="fa fa-heart"></i> Save for later
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guarantee Section -->
+                <div class="guarantee-section">
+                    <h4 class="section-title">Guarantee</h4>
+                    <div class="warranty-item">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked id="warrantyCheck">
+                        </div>
+                        <div>
+                            <label class="form-check-label fw-medium" for="warrantyCheck">
+                                24 month warranty
+                            </label>
+                            <div class="warranty-desc">In the event of a breakdown, your product is exchanged. Free</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Section -->
+                <div class="delivery-section">
+                    <h4 class="section-title">Delivery</h4>
+                    <div class="delivery-info">
+                        <i class="fas fa-truck me-2"></i> FREE delivery Monday, 8 September available at checkout
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="giftCheck">
+                        <label class="form-check-label" for="giftCheck">
+                            This will be a gift
+                        </label>
+                    </div>
+                    <div class="delivery-links mt-3">
+                        <a href="#"><i class="fas fa-shield-alt me-1"></i> Warranty Policy</a>
+                        <a href="#"><i class="fas fa-undo me-1"></i> Reimbursement in case of loss of the package</a>
+                    </div>
+                </div>
+
+                <!-- Recently Viewed Items (simplified) -->
+                <div class="mt-4">
+                    <h5>Your recently viewed items</h5>
+                    <div class="d-flex overflow-auto mt-3">
+                        <div class="card me-3" style="min-width: 180px;">
+                            <img src="https://via.placeholder.com/120x120/f8f9fa/cccccc?text=iPhone16" class="card-img-top" alt="iPhone 16 Pro">
+                            <div class="card-body p-2">
+                                <h6 class="card-title mb-1">iPhone 16 Pro Max</h6>
+                                <p class="card-text text-danger mb-0">R27,999</p>
+                                <small class="text-muted">Get it by Monday</small>
+                            </div>
+                        </div>
+                        <div class="card me-3" style="min-width: 180px;">
+                            <img src="https://via.placeholder.com/120x120/f8f9fa/cccccc?text=iPhone13" class="card-img-top" alt="iPhone 13 Pro">
+                            <div class="card-body p-2">
+                                <h6 class="card-title mb-1">iPhone 13 Pro</h6>
+                                <p class="card-text text-danger mb-0">R15,799</p>
+                                <small class="text-muted">Alpine Green</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Order Summary -->
+            <div class="col-lg-4">
+                <div class="summary-box">
+                    <h4 class="summary-title">ORDER SUMMARY</h4>
+                    
+                    <div class="summary-row">
+                        <span>Items (1):</span>
+                        <span>R8079.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount on item:</span>
+                        <span class="text-success">-R2909.10</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery:</span>
+                        <span class="text-success">R0.00</span>
+                    </div>
+                    
+                    <div class="summary-row summary-total">
+                        <span>TOTAL:</span>
+                        <span>R5169.90</span>
+                    </div>
+                    
+                    <div class="points-reward">Reward 240 points</div>
+                    
+                    <button class="btn btn-checkout w-100">
+                        PROCEED TO CHECKOUT
+                    </button>
+                    
+                    <button class="btn btn-guest w-100">
+                        CONTINUE AS GUEST
+                    </button>
+                    
+                    <div class="promo-code mt-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter a promotional code">
+                            <button class="btn btn-outline-secondary" type="button">Apply</button>
+                        </div>
+                    </div>
+                    
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-lock benefit-icon"></i>
+                            <span>Free & Safe Delivery</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-undo benefit-icon"></i>
+                            <span>10 Days to Return</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-shield-alt benefit-icon"></i>
+                            <span>12 Months Warranty</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-credit-card benefit-icon"></i>
+                            <span>Buy Now, Pay Later Options</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function changeQty(amount) {
+            const qtyInput = event.target.closest('.d-flex').querySelector('.qty-input');
+            let current = parseInt(qtyInput.value);
+            const max = parseInt(qtyInput.getAttribute('max'));
+            
+            current += amount;
+            
+            if (current < 1) current = 1;
+            if (max && current > max) current = max;
+            
+            qtyInput.value = current;
+        }
+        
+        function removeItem() {
+            if (confirm('Are you sure you want to remove this item from your cart?')) {
+                event.target.closest('.cart-item').remove();
+                updateCartSummary();
+            }
+        }
+        
+        function updateCartSummary() {
+            // This would normally update based on cart contents
+            console.log('Cart updated');
+        }
+    </script>
+</body>
+</html>
