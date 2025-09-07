@@ -17,30 +17,6 @@
             line-height: 1.6;
             background-color: #f8f9fa;
         }
-
-         /* Color picker styles */
-        .color-picker {
-        display: flex;
-        gap: 10px;
-        margin: 10px 0;
-        }
-        
-        .color-option {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: 3px solid transparent;
-        }
-        
-        .color-option:hover, .color-option.selected {
-        transform: scale(1.2);
-        border-color: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        }
-
-
         .product-main-img {
             position: relative;
             overflow: hidden;
@@ -90,61 +66,27 @@
             font-weight: 500;
             font-size: 16px;
         }
-
-
-        .aesthetic-btn {
-
-            border: 1px solid #007bff;
-            padding: 4px 4px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fff;
-            color: #007bff;
-
+       /* Aesthetic Condition Options */
+        .condition-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* spacing between buttons */
         }
-
-        .aesthetic-btn.active, aesthetic-btn:hover {
-
-            border-color: #007bff;
-            background: #007bff;
-            color: #fff;
-        
-        }
-
-        .battery-status-btn {
-
-             padding: 5px 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 10px;
-             color: #007bff;
-             border-color: #007bff;
-             background: #e6f0ff;
-
-        }
-
-         .battery-status-btn.active, .battery-status-btn:hover {
-
-            background: #6c757d;
-            color: #fff;
-
-         }
 
         .option-btn {
-
             padding: 8px 16px;
             border: 1px solid #ccc;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             background: #fff;
-
+            flex: 0 0 auto; /* allows resizing */
+            text-align: center;
+            
         }
 
-        .option-btn.active, .option-btn:hover {
+        .option-btn.active, 
+        .option-btn:hover {
             border-color: #007bff;
             background: #e6f0ff;
             color: #007bff;
@@ -283,7 +225,7 @@
                 </div>
                 <div class="d-flex product-thumbs justify-content-center">
                     <img src="13.jpg" class="active" onclick="switchImage(this)" alt="iPhone 12 Blue">
-                    <img src="12.png" onclick="switchImage(this)" alt="iPhone 12 Side View">
+                    <img src="product03.png" onclick="switchImage(this)" alt="iPhone 12 Side View">
                     <img src="product06.png" onclick="switchImage(this)" alt="iPhone 12 Back View">
                     <img src="product08.png" onclick="switchImage(this)" alt="iPhone 12 Front View">
                 </div>
@@ -318,32 +260,34 @@
                     <!-- Color Options -->
                     <div class="mb-3 color-options">
                         <h5>Color:</h5>
-                        <div class="color-picker">
-                            <div class="color-option selected" style="background-color: #d54548;"></div>
-                            <div class="color-option" style="background-color: #2a9d8f;"></div>
-                            <div class="color-option" style="background-color: #e9c46a;"></div>
-                            <div class="color-option" style="background-color: #264653;"></div>
-                            <div class="color-option" style="background-color: #f4a261;"></div>
-                            <div class="color-option" style="background-color: #e76f51;"></div>
-                        </div>
+                        <span class="color-swatch active" data-color="Blue" style="background-color: blue;"></span>
+                        <span class="color-swatch" data-color="Black" style="background-color: black;"></span>
+                        <span class="color-swatch" data-color="White" style="background-color: white; border: 1px solid #aaa;"></span>
+                        <span class="color-swatch" data-color="Red" style="background-color: red;"></span>
                     </div>
 
 
                     <!-- Condition Options -->
-                    <div class="mb-3">
-                        <h5>Aesthetic Condition:</h5>
-                        <span class="aesthetic-btn active" data-price="4499.90" data-condition="Good">Good</span>
-                        <span class="aesthetic-btn" data-price="4719.90" data-condition="Very Good">Very Good</span>
-                        <span class="aesthetic-btn" data-price="5149.90" data-condition="Like New">Like New</span>
+                    <h5>Aesthetic Condition:</h5>
+                   <div class="mb-3 condition-options">
+                    
+                        <span class="option-btn active" data-price="4499.90" data-condition="Good">Good - R4499.90</span>
+                        <span class="option-btn" data-price="4719.90" data-condition="Very Good">Very Good - R4719.90</span>
+                        <span class="option-btn" data-price="5149.90" data-condition="Like New">Like New - R5149.90</span>
                         <p class="text-muted small">100% functional, good aesthetic condition. Scratches or traces of use visible at 20 cm.</p>
                     </div>
 
                     <!-- Battery Status -->
                     <div class="mb-3">
                         <h5>Battery Status:</h5>
-                        <span class="battery-status-btn active" data-battery="Optimal">Optimal</span>
-                        <span class="battery-status-btn" data-battery="New">New</span>
-                        <p class="text-muted small">Max capacity &gt; 80%. 6-month guarantee for defective battery. <a href="#">Battery Warranty Policy</a></p>
+                        <div class="battery-options">
+                            <span class="option-btn active" data-battery="Optimal">Optimal</span>
+                            <span class="option-btn" data-battery="New">New</span>
+                        </div>
+                        <p class="text-muted small">
+                            Max capacity &gt; 80%. 6-month guarantee for defective battery. 
+                            <a href="#">Battery Warranty Policy</a>
+                        </p>
                     </div>
 
                     <!-- Quantity -->
@@ -537,43 +481,19 @@
             });
         });
 
-         // Dynamic Price Update
-        document.querySelectorAll('.aesthetic-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from siblings
-                this.parentElement.querySelectorAll('.aesthetic-btn').forEach(sibling => sibling.classList.remove('active'));
-                this.classList.add('active');
 
-                // Update price based on storage or condition
-                if (this.dataset.price) {
-                    const price = parseFloat(this.dataset.price).toFixed(2);
-                    const oldPrice = (parseFloat(this.dataset.price) + 3220).toFixed(2);
-                    document.getElementById('priceDisplay').innerHTML = `
-                        R${price} <span class="product-old-price">R${oldPrice}</span>
-                        <div class="save-price">Save R3220.00</div>
-                    `;
-                }
+        document.querySelectorAll(".color-swatch").forEach(swatch => {
+            swatch.addEventListener("click", () => {
+                // Remove active class from others
+                document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("active"));
+                swatch.classList.add("active");
+
+                // Change product image
+                const color = swatch.dataset.color.toLowerCase();
+                document.getElementById("productImage").src = `images/iphone-${color}.png`;
             });
         });
 
-         // Dynamic Price Update
-        document.querySelectorAll('.battery-status-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from siblings
-                this.parentElement.querySelectorAll('.battery-status-btn').forEach(sibling => sibling.classList.remove('active'));
-                this.classList.add('active');
-
-                // Update price based on storage or condition
-                if (this.dataset.price) {
-                    const price = parseFloat(this.dataset.price).toFixed(2);
-                    const oldPrice = (parseFloat(this.dataset.price) + 3220).toFixed(2);
-                    document.getElementById('priceDisplay').innerHTML = `
-                        R${price} <span class="product-old-price">R${oldPrice}</span>
-                        <div class="save-price">Save R3220.00</div>
-                    `;
-                }
-            });
-        });
     </script>
 </body>
 </html>
