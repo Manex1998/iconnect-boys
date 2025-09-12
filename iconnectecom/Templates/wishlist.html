@@ -3,90 +3,707 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist</title>
+    <title>Wishlist | Your Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2A59FE;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border-radius: 8px;
+        }
+        
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f8f9fa;
+            color: #333;
         }
+        
+        .top-alert {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+        
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .wishlist-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .wishlist-tabs {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 25px;
+        }
+        
+        .wishlist-tabs .nav-link {
+            color: var(--secondary);
+            font-weight: 500;
+            padding: 10px 20px;
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .wishlist-tabs .nav-link.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background: transparent;
+        }
+        
         .wishlist-item {
             border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
             background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
         }
+        
         .wishlist-img {
-            width: 100px;
-            border-radius: 8px;
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            background: #f8f9fa;
+            padding: 10px;
         }
-        .price {
-            font-size: 20px;
-            color: #e74c3c;
-            font-weight: 700;
+        
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 18px;
         }
-        .old-price {
-            color: #888;
-            text-decoration: line-through;
-            font-size: 16px;
+        
+        .product-details {
+            color: var(--secondary);
+            font-size: 14px;
+            margin-bottom: 10px;
         }
-        .save-price {
-            color: #27ae60;
+        
+        .product-condition {
+            display: inline-block;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
             font-weight: 500;
         }
-        .btn-add-cart {
-            background: #007bff;
-            color: #fff;
-            border-radius: 8px;
+        
+        .price-section {
+            margin: 10px 0;
         }
-        .btn-remove {
-            color: #dc3545;
+        
+        .current-price {
+            font-size: 20px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .old-price {
+            color: var(--secondary);
+            text-decoration: line-through;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        
+        .save-price {
+            color: var(--success);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .stock-status {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .in-stock {
+            color: var(--success);
+        }
+        
+        .low-stock {
+            color: var(--warning);
+        }
+        
+        .out-of-stock {
+            color: var(--danger);
+        }
+        
+        .wishlist-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-move-to-cart {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
             border: none;
-            background: none;
+        }
+        
+        .btn-move-to-cart:hover {
+            background-color: #1a4afe;
+        }
+        
+        .btn-remove-wishlist {
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            background: white;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+        }
+        
+        .btn-remove-wishlist:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .wishlist-item-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        
+        .btn-wishlist-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #dee2e6;
+            color: var(--secondary);
+        }
+        
+        .btn-wishlist-action:hover {
+            background: #f8f9fa;
+            color: var(--primary);
+        }
+        
+        .empty-wishlist {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .empty-wishlist-icon {
+            font-size: 64px;
+            color: #dee2e6;
+            margin-bottom: 20px;
+        }
+        
+        .wishlist-sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .wishlist-share {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-share {
+            flex: 1;
+            padding: 8px;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+        }
+        
+        .recently-viewed {
+            margin-top: 40px;
+        }
+        
+        .viewed-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .viewed-img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: var(--border-radius);
+            margin-right: 15px;
+        }
+        
+        .viewed-details {
+            flex: 1;
+        }
+        
+        .viewed-title {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .viewed-price {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        @media (max-width: 768px) {
+            .wishlist-img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .wishlist-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .wishlist-tabs .nav-link {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .wishlist-actions {
+                flex-direction: column;
+            }
+            
+            .wishlist-actions button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container my-5">
+    <!-- Top Alert Bar -->
+    <div class="top-alert">
+        <div class="container">
+            <div class="text-center">
+                <span class="d-none d-md-inline">GET R300 OFF YOUR FIRST APP ORDER - ENTER CODE </span>
+                <strong>APP300</strong> AT CHECKOUT
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-4">
+        <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home me-1"></i> Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">My Wishlist</li>
             </ol>
         </nav>
 
-        <h2>Wishlist</h2>
-        <div class="wishlist-item">
-            <div class="row align-items-center">
-                <div class="col-2">
-                    <img src="13.jpg" alt="iPhone 12" class="wishlist-img">
+        <!-- Wishlist Header -->
+        <div class="wishlist-header">
+            <h1 class="h2">My Wishlist</h1>
+            <div>
+                <span class="text-muted">4 items</span>
+            </div>
+        </div>
+
+        <!-- Wishlist Tabs -->
+        <ul class="nav wishlist-tabs" id="wishlistTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-items-tab" data-bs-toggle="tab" data-bs-target="#all-items" type="button" role="tab">All Items (4)</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="available-tab" data-bs-toggle="tab" data-bs-target="#available" type="button" role="tab">Available (3)</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="private-tab" data-bs-toggle="tab" data-bs-target="#private" type="button" role="tab">Private</button>
+            </li>
+        </ul>
+
+        <div class="row">
+            <!-- Left Column - Wishlist Items -->
+            <div class="col-lg-9">
+                <div class="tab-content" id="wishlistTabContent">
+                    <!-- All Items Tab -->
+                    <div class="tab-pane fade show active" id="all-items" role="tabpanel">
+                        <!-- Wishlist Item 1 -->
+                        <div class="wishlist-item">
+                            <div class="wishlist-item-actions">
+                                <button class="btn-wishlist-action mb-2">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 col-md-2">
+                                    <img src="https://via.placeholder.com/120x120/f8f9fa/cccccc?text=iPhone13" alt="iPhone 13 Pro" class="img-fluid wishlist-img">
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    <h3 class="product-title">iPhone 13 Pro</h3>
+                                    <div class="product-details">
+                                        <span class="product-condition">Excellent condition</span>
+                                        <div class="mt-2">Alpine Green / 512 GB</div>
+                                        <div class="stock-status in-stock mt-1">
+                                            <i class="fas fa-check-circle"></i> In stock
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-3 mt-md-0">
+                                    <div class="price-section">
+                                        <span class="old-price">R18,499.00</span>
+                                        <span class="current-price">R15,799.00</span>
+                                        <div class="save-price">Save R2,700.00</div>
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="btn-move-to-cart">
+                                            <i class="fas fa-shopping-cart me-1"></i> Move to Cart
+                                        </button>
+                                        <button class="btn-remove-wishlist">
+                                            <i class="fas fa-trash me-1"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist Item 2 -->
+                        <div class="wishlist-item">
+                            <div class="wishlist-item-actions">
+                                <button class="btn-wishlist-action mb-2">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 col-md-2">
+                                    <img src="https://via.placeholder.com/120x120/f8f9fa/cccccc?text=iPhone12" alt="iPhone 12 mini" class="img-fluid wishlist-img">
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    <h3 class="product-title">iPhone 12 mini</h3>
+                                    <div class="product-details">
+                                        <span class="product-condition">Good condition</span>
+                                        <div class="mt-2">Black / 128 GB / New battery</div>
+                                        <div class="stock-status in-stock mt-1">
+                                            <i class="fas fa-check-circle"></i> In stock
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-3 mt-md-0">
+                                    <div class="price-section">
+                                        <span class="old-price">R8,079.00</span>
+                                        <span class="current-price">R5,169.90</span>
+                                        <div class="save-price">Save R2,909.10</div>
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="btn-move-to-cart">
+                                            <i class="fas fa-shopping-cart me-1"></i> Move to Cart
+                                        </button>
+                                        <button class="btn-remove-wishlist">
+                                            <i class="fas fa-trash me-1"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist Item 3 -->
+                        <div class="wishlist-item">
+                            <div class="wishlist-item-actions">
+                                <button class="btn-wishlist-action mb-2">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 col-md-2">
+                                    <img src="https://via.placeholder.com/120x120/f8f9fa/cccccc?text=AirPods" alt="AirPods Pro" class="img-fluid wishlist-img">
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    <h3 class="product-title">AirPods Pro (2nd Generation)</h3>
+                                    <div class="product-details">
+                                        <span class="product-condition">Refurbished</span>
+                                        <div class="mt-2">White | MagSafe Charging Case</div>
+                                        <div class="stock-status low-stock mt-1">
+                                            <i class="fas fa-exclamation-circle"></i> Only 2 left in stock
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-3 mt-md-0">
+                                    <div class="price-section">
+                                        <span class="old-price">R3,499.00</span>
+                                        <span class="current-price">R2,799.00</span>
+                                        <div class="save-price">Save R700.00</div>
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="btn-move-to-cart">
+                                            <i class="fas fa-shopping-cart me-1"></i> Move to Cart
+                                        </button>
+                                        <button class="btn-remove-wishlist">
+                                            <i class="fas fa-trash me-1"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist Item 4 -->
+                        <div class="wishlist-item">
+                            <div class="wishlist-item-actions">
+                                <button class="btn-wishlist-action mb-2">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-3 col-md-2">
+                                    <img src="https://via.placeholder.com/120x120/f8f9fa/cccccc?text=iPhone16" alt="iPhone 16 Pro Max" class="img-fluid wishlist-img">
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    <h3 class="product-title">iPhone 16 Pro Max</h3>
+                                    <div class="product-details">
+                                        <span class="product-condition">Brand new</span>
+                                        <div class="mt-2">Black Titanium / 256 GB</div>
+                                        <div class="stock-status out-of-stock mt-1">
+                                            <i class="fas fa-times-circle"></i> Out of stock
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-3 mt-md-0">
+                                    <div class="price-section">
+                                        <span class="current-price">R27,999.00</span>
+                                    </div>
+                                    <div class="wishlist-actions">
+                                        <button class="btn-move-to-cart" disabled>
+                                            <i class="fas fa-shopping-cart me-1"></i> Notify When Available
+                                        </button>
+                                        <button class="btn-remove-wishlist">
+                                            <i class="fas fa-trash me-1"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other tabs would go here -->
+                    <div class="tab-pane fade" id="available" role="tabpanel">
+                        <!-- Available items would be shown here -->
+                    </div>
+                    
+                    <div class="tab-pane fade" id="private" role="tabpanel">
+                        <!-- Private items would be shown here -->
+                    </div>
                 </div>
-                <div class="col-4">
-                    <h5>iPhone 12 64GB Blue</h5>
-                    <p>Storage: 64GB | Color: Blue | Condition: Good</p>
-                    <p>Battery: Optimal | Works with all networks</p>
+
+                <!-- Recently Viewed Section -->
+                <div class="recently-viewed">
+                    <h4 class="mb-4">Recently Viewed</h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="viewed-item">
+                                <img src="https://via.placeholder.com/70x70/f8f9fa/cccccc?text=Watch" alt="Apple Watch" class="viewed-img">
+                                <div class="viewed-details">
+                                    <div class="viewed-title">Apple Watch Series 8</div>
+                                    <div class="viewed-price">R6,499.00</div>
+                                </div>
+                                <button class="btn-wishlist-action">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="viewed-item">
+                                <img src="https://via.placeholder.com/70x70/f8f9fa/cccccc?text=iPad" alt="iPad Air" class="viewed-img">
+                                <div class="viewed-details">
+                                    <div class="viewed-title">iPad Air (5th Generation)</div>
+                                    <div class="viewed-price">R11,999.00</div>
+                                </div>
+                                <button class="btn-wishlist-action">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="viewed-item">
+                                <img src="https://via.placeholder.com/70x70/f8f9fa/cccccc?text=Mac" alt="MacBook Pro" class="viewed-img">
+                                <div class="viewed-details">
+                                    <div class="viewed-title">MacBook Pro 14"</div>
+                                    <div class="viewed-price">R32,999.00</div>
+                                </div>
+                                <button class="btn-wishlist-action">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-2">
-                    <p class="price">R4499.90 <span class="old-price">R7719.90</span></p>
-                    <p class="save-price">Save R3220.00</p>
+            </div>
+
+            <!-- Right Column - Wishlist Sidebar -->
+            <div class="col-lg-3">
+                <div class="wishlist-sidebar">
+                    <h4>Wishlist Summary</h4>
+                    <p class="text-muted">4 items in your wishlist</p>
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-shopping-cart me-2"></i> Add All to Cart
+                        </button>
+                        <button class="btn btn-outline-secondary">
+                            <i class="fas fa-share-alt me-2"></i> Share Wishlist
+                        </button>
+                    </div>
+                    
+                    <div class="wishlist-share">
+                        <h5>Share your wishlist</h5>
+                        <p class="text-muted">Let friends and family know what you'd love to receive</p>
+                        
+                        <div class="share-buttons">
+                            <button class="btn btn-share btn-outline-primary">
+                                <i class="fab fa-facebook me-1"></i> Facebook
+                            </button>
+                            <button class="btn btn-share btn-outline-info">
+                                <i class="fab fa-twitter me-1"></i> Twitter
+                            </button>
+                        </div>
+                        
+                        <div class="input-group mt-3">
+                            <input type="text" class="form-control" value="https://example.com/wishlist/abc123" readonly>
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-4">
-                    <button class="btn btn-add-cart me-2"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                    <button class="btn-remove" onclick="removeItem()"><i class="fa fa-trash"></i> Remove</button>
+                
+                <div class="wishlist-sidebar mt-4">
+                    <h5>Wishlist Tips</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Get notified when prices drop</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Share with friends for gift ideas</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Items saved for 90 days</li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <!-- Add more wishlist items as needed -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function removeItem() {
-            event.target.closest('.wishlist-item').remove();
+        // Function to handle moving items to cart
+        function moveToCart(event) {
+            const button = event.target.closest('button');
+            const productTitle = button.closest('.wishlist-item').querySelector('.product-title').textContent;
+            
+            button.innerHTML = '<i class="fas fa-check me-1"></i> Added to Cart';
+            button.classList.remove('btn-move-to-cart');
+            button.classList.add('btn-success');
+            
+            // Show a temporary confirmation message
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 end-0 p-3';
+            toast.innerHTML = `
+                <div class="toast show" role="alert">
+                    <div class="toast-header">
+                        <strong class="me-auto">Added to Cart</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${productTitle} has been added to your shopping cart.
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
         }
+        
+        // Function to handle removing items from wishlist
+        function removeFromWishlist(event) {
+            const item = event.target.closest('.wishlist-item');
+            const productTitle = item.querySelector('.product-title').textContent;
+            
+            if (confirm(`Are you sure you want to remove ${productTitle} from your wishlist?`)) {
+                item.remove();
+                
+                // Update item count
+                const itemCount = document.querySelectorAll('.wishlist-item').length;
+                document.querySelector('.wishlist-header span').textContent = `${itemCount} items`;
+                
+                // Show empty state if no items left
+                if (itemCount === 0) {
+                    document.querySelector('#all-items').innerHTML = `
+                        <div class="empty-wishlist">
+                            <div class="empty-wishlist-icon">
+                                <i class="far fa-heart"></i>
+                            </div>
+                            <h3>Your wishlist is empty</h3>
+                            <p class="text-muted">Save your favorite items here for easy access later</p>
+                            <button class="btn btn-primary mt-3">Continue Shopping</button>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // Add event listeners after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add move to cart functionality
+            const moveButtons = document.querySelectorAll('.btn-move-to-cart');
+            moveButtons.forEach(button => {
+                button.addEventListener('click', moveToCart);
+            });
+            
+            // Add remove from wishlist functionality
+            const removeButtons = document.querySelectorAll('.btn-remove-wishlist');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', removeFromWishlist);
+            });
+            
+            // Copy link functionality
+            const copyButton = document.querySelector('.btn-outline-secondary');
+            copyButton.addEventListener('click', function() {
+                const copyText = document.querySelector('input[type="text"]');
+                copyText.select();
+                document.execCommand('copy');
+                
+                // Show feedback
+                const originalHtml = copyButton.innerHTML;
+                copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyButton.innerHTML = originalHtml;
+                }, 2000);
+            });
+        });
     </script>
 </body>
 </html>
