@@ -6,6 +6,7 @@ from django.utils.crypto import get_random_string
 from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Avg
+from django.conf import settings
 
 
 # ==========================
@@ -306,7 +307,7 @@ class ProductImage(models.Model):
 # ==========================
 class Rating(models.Model):
     product = models.ForeignKey(Product, related_name="ratings", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='rating')
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     review = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -322,7 +323,7 @@ class Rating(models.Model):
 # WISHLIST (Optional)
 # ==========================
 class Wishlist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wishlist")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wishlist')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 

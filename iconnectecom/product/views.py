@@ -85,6 +85,13 @@ def toggle_wishlist(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
+
+    # Track recently viewed
+    recently_viewed = request.session.get('recently_viewed', [])
+    if product.id not in recently_viewed:
+        recently_viewed.insert(0, product.id)
+        recently_viewed = recently_viewed[:4]  # Keep last 4
+        request.session['recently_viewed'] = recently_viewed
     
     # Get selected variant (default to the product's default variant or first variant)
     variant_id = request.session.get(f'selected_variant_{product.id}')

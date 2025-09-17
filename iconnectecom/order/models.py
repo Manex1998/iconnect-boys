@@ -1,4 +1,8 @@
 from django.db import models
+from product.models import Product, ProductVariant
+from django.conf import settings
+from .utils import generate_order_number
+
 
 # Create your models here.
 
@@ -11,7 +15,7 @@ class Order(models.Model):
         ('CANCELLED', 'Cancelled'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
     order_number = models.CharField(max_length=255, default=generate_order_number, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Added for tracking
@@ -56,10 +60,10 @@ class OrderItem(models.Model):
         return price * self.quantity
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name}"
+        return f"{self.quantity} x {self.product.title}"
 
 class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='cart')
     updated_at = models.DateTimeField(auto_now=True)  # Added for tracking
 
     def __str__(self):
@@ -68,8 +72,11 @@ class Cart(models.Model):
     @property
     def total(self):
         return sum(
-            item.quantity * (item.product.discount_price if item.product.is_discounted else item.product.price)
-            for item in self.items.select_related('product')
+            item.quantity * (
+                item.variant.price if item.variant else
+                (item.product.discount_price if item.product.is_discounted else item.product.price)
+            )
+            for item in self.items.select_related('product', 'variant')
         )
     
     @property
@@ -84,13 +91,13 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
-        unique_together = ('cart', 'product')
+        unique_together = ('cart', 'product', 'variant')
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name}"
-    
+        return f"{self.quantity} x {self.product.title} ({self.variant.storage if self.variant else 'No variant'})"
 
 

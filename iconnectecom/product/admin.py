@@ -24,8 +24,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ["product", "name", "price", "stock", "is_default"]
-    list_filter = ["is_default"]
+    list_display = ["product", "name", "price", "stock"]
+    #list_filter = ["is_default"]
     search_fields = ["name", "sku"]
 
 @admin.register(ProductImage)

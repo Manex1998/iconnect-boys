@@ -119,9 +119,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# settings.py
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 NEW_PRODUCT_DAYS = 7  # Default to 7 days
+
+# settings.py
+AUTH_USER_MODEL = 'accounts.CustomUser'
