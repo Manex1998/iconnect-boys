@@ -132,3 +132,10 @@ NEW_PRODUCT_DAYS = 7  # Default to 7 days
 
 # settings.py
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+LOGIN_REDIRECT_URL = "/"   # after login redirect to home
+LOGOUT_REDIRECT_URL = "/"  # after logout redirect to home
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  
+# ⬆️ For dev: sends reset password emails to console.
+# In production, replace with SMTP (e.g., Gmail, SendGrid).

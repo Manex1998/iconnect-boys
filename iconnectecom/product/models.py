@@ -7,6 +7,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Avg
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 
 # ==========================
@@ -151,11 +152,6 @@ class Product(models.Model):
                                     validators=[MinValueValidator(0)])
     sku = models.CharField(max_length=100, unique=True, blank=True, null=True)
 
-    # Media
-    image = models.ImageField(upload_to="products/")
-    # We’ll use ProductImage model instead of additional_images M2M
-    # default_image() property will fetch it
-
     # Ratings
     rating = models.DecimalField(max_digits=3, decimal_places=1, default=0,
                                  validators=[MinValueValidator(0), MaxValueValidator(5)])
@@ -235,7 +231,7 @@ class Product(models.Model):
         return self.images.filter(is_primary=True).first() or self.images.first()
 
     def update_average_rating(self):
-        avg = self.reviews.aggregate(Avg("rating"))["rating__avg"]
+        avg = self.rating.aggregate(Avg("rating"))["rating__avg"]
         self.rating = avg if avg is not None else 0.0
         self.rating_count = self.reviews.count()
         self.save()
@@ -258,6 +254,9 @@ class ProductVariant(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     old_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     stock = models.PositiveIntegerField(default=0)
+
+     # 👇 new field
+    is_default = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("product", "color", "storage")
